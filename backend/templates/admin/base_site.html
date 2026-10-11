@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+{% load static i18n %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'admin/css/basera_admin.css' %}?v=4">
+{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <meta name="theme-color" content="#1B4F72">
+  <link rel="icon" href="{% static 'admin/img/basera_mark.svg' %}" type="image/svg+xml">
+{% endblock %}
+
+{% block branding %}
+  <div id="basera-brand">
+    <a href="{% url 'admin:index' %}" class="basera-brand-link">
+      <span class="basera-brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="12" fill="#148F77"/>
+          <path d="M12 30.5V17.5L24 11l12 6.5v13L24 37l-12-6.5z" stroke="#fff" stroke-width="2" fill="rgba(255,255,255,.12)"/>
+          <circle cx="24" cy="24" r="4.5" fill="#D4A017"/>
+          <path d="M24 19.5v9M19.5 24h9" stroke="#1B4F72" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="basera-brand-text">
+        <strong>{{ site_header|default:_('Django administration') }}</strong>
+        <small>منصة التعلم الصوتي للمكفوفين</small>
+      </span>
+    </a>
+  </div>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block footer %}
+  <div id="basera-footer">
+    <div class="basera-footer-inner">
+      <span>© {% now "Y" %} بصيرة — لوحة إدارة المحتوى</span>
+      <span class="basera-footer-sep">·</span>
+      <span>واجهة مصممة بإمكانية وصول عالية التباين</span>
+    </div>
+  </div>
+  <script src="{% static 'admin/js/basera_admin.js' %}?v=4" defer></script>
+  {{ block.super }}
+{% endblock %}

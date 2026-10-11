@@ -1,0 +1,9 @@
+{% extends "admin/change_form.html" %}
+
+{% block content %}
+  <div class="basera-form-hint" style="background:linear-gradient(90deg,rgba(27,79,114,.08),rgba(20,143,119,.08));border:1px solid #E2E8F0;border-radius:14px;padding:14px 16px;margin:0 0 18px;color:#5A6A7A;font-weight:600;line-height:1.65">
+    <strong style="color:#1B4F72">تذكير الاختبار:</strong>
+    اربط الاختبار بدرس منشور، أضف الأسئلة داخل الصفحة، وللأسئلة متعددة الاختيارات حدّد الخيار الصحيح. هذه هي الاختبارات التي تظهر في تطبيق بصيرة.
+  </div>
+  {{ block.super }}
+{% endblock %}

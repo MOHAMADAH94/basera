@@ -1,0 +1,1056 @@
+/*
+  بصيرة — ثيم لوحة تحكم Django
+  ألوان التطبيق: نيلي #1B4F72 | فيروزي #148F77 | ذهبي #D4A017 | خلفية #F4F7FB
+*/
+
+:root {
+  --basera-primary: #1B4F72;
+  --basera-primary-deep: #154360;
+  --basera-secondary: #148F77;
+  --basera-accent: #D4A017;
+  --basera-bg: #F4F7FB;
+  --basera-surface: #FFFFFF;
+  --basera-text: #1A2332;
+  --basera-muted: #5A6A7A;
+  --basera-success: #1E8449;
+  --basera-danger: #C0392B;
+  --basera-border: #E2E8F0;
+  --basera-shadow: 0 10px 28px rgba(27, 79, 114, 0.10);
+  --basera-shadow-sm: 0 4px 14px rgba(27, 79, 114, 0.08);
+  --basera-radius: 16px;
+  --basera-radius-sm: 12px;
+  --basera-font: "Cairo", "Tahoma", "Segoe UI", sans-serif;
+
+  --primary: var(--basera-primary);
+  --secondary: var(--basera-secondary);
+  --accent: var(--basera-secondary);
+  --primary-fg: #fff;
+  --body-fg: var(--basera-text);
+  --body-bg: var(--basera-bg);
+  --body-quiet-color: var(--basera-muted);
+  --body-loud-color: var(--basera-text);
+  --header-color: #fff;
+  --header-branding-color: #fff;
+  --header-bg: linear-gradient(115deg, #154360 0%, #1B4F72 48%, #117A65 100%);
+  --header-link-color: #E8F6F3;
+  --breadcrumbs-fg: #D6EAF8;
+  --breadcrumbs-link-fg: #fff;
+  --breadcrumbs-bg: var(--basera-primary-deep);
+  --link-fg: var(--basera-primary);
+  --link-hover-color: var(--basera-secondary);
+  --link-selected-fg: #0E6655;
+  --hairline-color: var(--basera-border);
+  --border-color: var(--basera-border);
+  --darkened-bg: #EEF3F8;
+  --selected-bg: #E8F6F3;
+  --selected-row: #EAF7F4;
+  --button-bg: var(--basera-primary);
+  --button-hover-bg: #163F5B;
+  --default-button-bg: var(--basera-secondary);
+  --default-button-hover-bg: #0E7A66;
+  --close-button-bg: #6B7C8C;
+  --delete-button-bg: var(--basera-danger);
+  --object-tools-bg: var(--basera-secondary);
+  --object-tools-hover-bg: #0E7A66;
+  --font-family-primary: var(--basera-font);
+  --font-family-secondary: var(--basera-font);
+}
+
+html[data-theme="dark"] {
+  --basera-bg: #0F1A24;
+  --basera-surface: #172533;
+  --basera-text: #E8EEF5;
+  --basera-muted: #A0B0C0;
+  --basera-border: #2A3B4D;
+  --body-bg: var(--basera-bg);
+  --body-fg: var(--basera-text);
+  --darkened-bg: #13202C;
+  --selected-bg: #1A3A36;
+  --selected-row: #1A3A36;
+  --hairline-color: var(--basera-border);
+  --border-color: var(--basera-border);
+}
+
+/* ——— أساسيات ——— */
+html, body {
+  font-family: var(--basera-font) !important;
+  background: var(--basera-bg) !important;
+  color: var(--basera-text);
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 100% -10%, rgba(20, 143, 119, 0.10), transparent 55%),
+    radial-gradient(ellipse 60% 40% at -10% 20%, rgba(27, 79, 114, 0.10), transparent 50%);
+  background-attachment: fixed;
+}
+
+a:link, a:visited { color: var(--basera-primary); }
+a:hover { color: var(--basera-secondary); }
+
+/* ——— الرأس ——— */
+#header {
+  background: linear-gradient(115deg, #154360 0%, #1B4F72 48%, #117A65 100%) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 8px 24px rgba(21, 67, 96, 0.28);
+  padding: 14px 28px !important;
+  align-items: center;
+}
+
+#branding h1,
+#branding h1 a:link,
+#branding h1 a:visited {
+  color: #fff !important;
+  font-weight: 800;
+}
+
+#basera-brand { display: flex; align-items: center; }
+.basera-brand-link {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none !important;
+  color: #fff !important;
+}
+.basera-brand-mark {
+  display: inline-flex;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,.18));
+}
+.basera-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+.basera-brand-text strong {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+.basera-brand-text small {
+  font-size: 0.78rem;
+  font-weight: 500;
+  opacity: 0.88;
+  color: #D6EAF8;
+}
+
+#user-tools {
+  color: #E8F6F3 !important;
+  font-weight: 600;
+  padding: 0 !important;
+}
+#user-tools a {
+  color: #fff !important;
+  border-bottom: 1px solid transparent;
+}
+#user-tools a:hover {
+  border-bottom-color: var(--basera-accent);
+}
+
+/* ——— مسار التنقل ——— */
+div.breadcrumbs {
+  background: linear-gradient(90deg, #123A52, #1B4F72) !important;
+  color: #D6EAF8 !important;
+  padding: 12px 28px !important;
+  border: none !important;
+  font-weight: 600;
+}
+div.breadcrumbs a { color: #fff !important; }
+
+/* ——— التخطيط ——— */
+#container { height: auto; min-height: 100vh; }
+#main { padding-bottom: 48px; }
+
+#content {
+  padding: 24px 28px 40px !important;
+}
+
+#content h1 {
+  font-weight: 800;
+  color: var(--basera-primary);
+  font-size: 1.65rem;
+  margin-bottom: 18px;
+}
+
+/* ——— الشريط الجانبي ——— */
+#nav-sidebar {
+  background: var(--basera-surface) !important;
+  border-inline-end: 1px solid var(--basera-border) !important;
+  box-shadow: var(--basera-shadow-sm);
+}
+#nav-sidebar .current-model { background: #E8F6F3 !important; }
+#nav-filter {
+  border-radius: 10px !important;
+  border: 1px solid var(--basera-border) !important;
+  padding: 8px 12px !important;
+}
+.toggle-nav-sidebar {
+  border-color: var(--basera-border) !important;
+  background: var(--basera-surface) !important;
+  color: var(--basera-primary) !important;
+}
+
+/* ——— الوحدات والجداول ——— */
+.module,
+.basera-app-module {
+  background: var(--basera-surface) !important;
+  border: 1px solid var(--basera-border) !important;
+  border-radius: var(--basera-radius) !important;
+  box-shadow: var(--basera-shadow-sm);
+  overflow: hidden;
+  margin-bottom: 18px !important;
+}
+
+/* داخل صفحات التعديل: لا تقطع القوائم المنسدلة */
+.change-form .module,
+.change-form fieldset.module,
+.change-form .inline-group,
+#content-main > form .module {
+  overflow: visible !important;
+}
+
+.module caption,
+.inline-group h2,
+.module > h2,
+fieldset.module h2 {
+  background: linear-gradient(90deg, #1B4F72, #148F77) !important;
+  color: #fff !important;
+  padding: 12px 16px !important;
+  font-weight: 700 !important;
+  font-size: 0.98rem !important;
+  border: none !important;
+  caption-side: top;
+}
+
+.module caption a,
+.module h2 a {
+  color: #fff !important;
+}
+
+#changelist {
+  background: transparent !important;
+}
+
+#changelist .actions {
+  background: var(--basera-surface);
+  border: 1px solid var(--basera-border);
+  border-radius: var(--basera-radius-sm);
+  padding: 10px 12px;
+}
+
+#changelist-filter {
+  background: var(--basera-surface) !important;
+  border: 1px solid var(--basera-border) !important;
+  border-radius: var(--basera-radius) !important;
+  box-shadow: var(--basera-shadow-sm);
+  overflow: hidden;
+}
+#changelist-filter h2 {
+  background: var(--basera-primary) !important;
+  color: #fff !important;
+  padding: 12px 14px !important;
+}
+#changelist-filter h3 {
+  color: var(--basera-primary);
+  font-weight: 700;
+}
+#changelist-filter li.selected a {
+  color: var(--basera-secondary) !important;
+  font-weight: 700;
+}
+
+#result_list {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  background: var(--basera-surface);
+  border-radius: var(--basera-radius);
+  overflow: hidden;
+  border: 1px solid var(--basera-border);
+}
+#result_list thead th {
+  background: #EEF3F8 !important;
+  color: var(--basera-primary);
+  font-weight: 700;
+  border-bottom: 1px solid var(--basera-border) !important;
+  padding: 12px 10px !important;
+}
+#result_list tbody tr:nth-child(even) { background: #F8FBFD; }
+#result_list tbody tr:hover { background: #EAF7F4 !important; }
+#result_list td, #result_list th {
+  border-bottom: 1px solid var(--basera-border);
+  padding: 11px 10px !important;
+  vertical-align: middle;
+}
+
+/* ——— النماذج ——— */
+.form-row {
+  border-bottom: 1px solid var(--basera-border) !important;
+  padding: 14px 0 !important;
+  overflow: visible !important;
+}
+.form-row::after {
+  clear: both;
+  content: "";
+  display: table;
+}
+label {
+  font-weight: 700 !important;
+  color: var(--basera-text) !important;
+}
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=url],
+input[type=number],
+input[type=tel],
+input[type=date],
+input[type=time],
+input[type=datetime-local],
+textarea,
+.vTextField,
+.vLargeTextField,
+.vURLField,
+.vIntegerField,
+.vDateField,
+.vTimeField {
+  border: 1.5px solid var(--basera-border) !important;
+  border-radius: 12px !important;
+  padding: 10px 12px !important;
+  min-height: 44px;
+  background: #fff !important;
+  color: var(--basera-text) !important;
+  font-family: var(--basera-font) !important;
+  font-size: 0.98rem !important;
+  font-weight: 600 !important;
+  transition: border-color .15s ease, box-shadow .15s ease;
+  box-sizing: border-box;
+}
+textarea {
+  min-height: 120px;
+  line-height: 1.65 !important;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--basera-secondary) !important;
+  box-shadow: 0 0 0 3px rgba(20, 143, 119, 0.18) !important;
+  outline: none !important;
+}
+
+/* ——— القوائم المنسدلة (شامل) ——— */
+select,
+select.admin-autocomplete,
+.form-row select,
+.aligned select,
+.actions select,
+fieldset select,
+.inline-group select,
+.related-widget-wrapper > select {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  display: inline-block !important;
+  width: auto !important;
+  min-width: min(100%, 280px) !important;
+  max-width: 100% !important;
+  min-height: 46px !important;
+  height: auto !important;
+  line-height: 1.4 !important;
+  padding: 10px 42px 10px 14px !important;
+  border: 1.5px solid #B8C7D6 !important;
+  border-radius: 12px !important;
+  background-color: #FFFFFF !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231B4F72' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: left 14px center !important;
+  background-size: 16px 16px !important;
+  color: #1A2332 !important;
+  font-family: var(--basera-font) !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  vertical-align: middle;
+  box-sizing: border-box !important;
+}
+[dir="rtl"] select,
+[dir="rtl"] .form-row select,
+[dir="rtl"] .aligned select,
+[dir="rtl"] .actions select,
+[dir="rtl"] fieldset select,
+[dir="rtl"] .related-widget-wrapper > select {
+  padding: 10px 14px 10px 42px !important;
+  background-position: left 14px center !important;
+}
+select:hover {
+  border-color: var(--basera-secondary) !important;
+  background-color: #F7FBFA !important;
+}
+select:disabled {
+  opacity: 0.65;
+  cursor: not-allowed !important;
+  background-color: #EEF2F6 !important;
+}
+select option,
+select optgroup {
+  color: #1A2332 !important;
+  background: #fff !important;
+  font-weight: 600;
+  padding: 8px;
+}
+
+/* Related widget (ForeignKey + أزرار إضافة/تعديل) */
+.related-widget-wrapper {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 720px;
+  overflow: visible !important;
+}
+.related-widget-wrapper select {
+  flex: 1 1 240px !important;
+}
+.related-widget-wrapper-link {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 10px !important;
+  background: #EEF3F8 !important;
+  border: 1px solid var(--basera-border) !important;
+}
+.related-widget-wrapper-link:hover {
+  background: #E8F6F3 !important;
+  border-color: var(--basera-secondary) !important;
+}
+
+/* Select2 / Autocomplete */
+.select2-container {
+  width: min(100%, 420px) !important;
+  min-width: 240px !important;
+  z-index: 20;
+}
+.select2-container--admin-autocomplete .select2-selection--single,
+.select2-container--default .select2-selection--single {
+  min-height: 46px !important;
+  height: 46px !important;
+  border: 1.5px solid #B8C7D6 !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  padding: 6px 10px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.select2-container--admin-autocomplete .select2-selection--single .select2-selection__rendered,
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #1A2332 !important;
+  font-family: var(--basera-font) !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  line-height: 32px !important;
+  padding: 0 8px !important;
+}
+.select2-container--admin-autocomplete .select2-selection--single .select2-selection__arrow,
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 44px !important;
+  width: 32px !important;
+  top: 1px !important;
+}
+.select2-dropdown,
+.select2-container--open .select2-dropdown {
+  z-index: 10050 !important;
+  border: 1.5px solid #B8C7D6 !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: var(--basera-shadow);
+  font-family: var(--basera-font) !important;
+}
+.select2-results__option {
+  padding: 10px 12px !important;
+  font-weight: 600 !important;
+  color: #1A2332 !important;
+}
+.select2-results__option--highlighted[aria-selected],
+.select2-results__option--highlighted {
+  background: #148F77 !important;
+  color: #fff !important;
+}
+.select2-search--dropdown .select2-search__field {
+  border: 1.5px solid #B8C7D6 !important;
+  border-radius: 10px !important;
+  padding: 8px 10px !important;
+  font-family: var(--basera-font) !important;
+}
+
+/* حقل الحالة داخل النموذج يظهر أوضح */
+.form-row .field-status select,
+.form-row select#id_status {
+  min-width: min(100%, 320px) !important;
+  border-color: var(--basera-secondary) !important;
+  background-color: #F2FBF8 !important;
+}
+
+/* ——— الأزرار ——— */
+.button,
+input[type=submit],
+input[type=button],
+.submit-row input,
+a.button {
+  border-radius: 12px !important;
+  font-family: var(--basera-font) !important;
+  font-weight: 700 !important;
+  padding: 10px 18px !important;
+  border: none !important;
+  box-shadow: none !important;
+  transition: transform .12s ease, background .15s ease, box-shadow .15s ease;
+}
+.button:hover,
+input[type=submit]:hover,
+input[type=button]:hover,
+a.button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--basera-shadow-sm);
+}
+.button.default,
+input[type=submit].default,
+.submit-row input.default {
+  background: var(--basera-secondary) !important;
+}
+input[type=submit],
+.button {
+  background: var(--basera-primary) !important;
+  color: #fff !important;
+}
+.deletelink,
+.deletelink-box a.deletelink,
+.delete-confirmation form input[type=submit] {
+  background: var(--basera-danger) !important;
+}
+
+.object-tools {
+  margin-bottom: 16px;
+}
+.object-tools a {
+  background: var(--basera-secondary) !important;
+  border-radius: 999px !important;
+  padding: 8px 16px !important;
+  font-weight: 700 !important;
+  box-shadow: var(--basera-shadow-sm);
+}
+.object-tools a:hover {
+  background: #0E7A66 !important;
+}
+
+.submit-row {
+  background: var(--basera-surface) !important;
+  border: 1px solid var(--basera-border) !important;
+  border-radius: var(--basera-radius) !important;
+  padding: 16px !important;
+  box-shadow: var(--basera-shadow-sm);
+}
+
+/* ——— رسائل ——— */
+.messagelist li {
+  border-radius: var(--basera-radius-sm) !important;
+  font-weight: 600;
+  border: none !important;
+  box-shadow: var(--basera-shadow-sm);
+}
+.messagelist .success { background: #E8F8F0 !important; color: var(--basera-success) !important; }
+.messagelist .warning { background: #FCF3CF !important; color: #9A7B0A !important; }
+.messagelist .error { background: #FDEDEC !important; color: var(--basera-danger) !important; }
+.errornote {
+  background: #FDEDEC !important;
+  color: var(--basera-danger) !important;
+  border: none !important;
+  border-radius: var(--basera-radius-sm) !important;
+  padding: 12px 14px !important;
+  font-weight: 700;
+}
+
+/* ——— صفحة رئيسية مخصصة ——— */
+.basera-dashboard #content > h1 { display: none; }
+
+.basera-hero {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-end;
+  background:
+    linear-gradient(125deg, rgba(27, 79, 114, 0.96), rgba(20, 143, 119, 0.92)),
+    radial-gradient(circle at 90% 10%, rgba(212, 160, 23, 0.35), transparent 40%);
+  color: #fff;
+  border-radius: 22px;
+  padding: 28px 30px;
+  margin-bottom: 22px;
+  box-shadow: var(--basera-shadow);
+  position: relative;
+  overflow: hidden;
+}
+.basera-hero::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: -40px;
+  top: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  pointer-events: none;
+}
+.basera-eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #D4A017;
+}
+.basera-hero h1 {
+  margin: 0 0 8px !important;
+  color: #fff !important;
+  font-size: 1.75rem !important;
+  font-weight: 800 !important;
+}
+.basera-hero-lead {
+  margin: 0;
+  max-width: 46ch;
+  color: rgba(255,255,255,0.9);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.basera-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  z-index: 1;
+}
+
+.basera-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none !important;
+  transition: transform .12s ease, background .15s ease;
+}
+.basera-btn:hover { transform: translateY(-1px); }
+.basera-btn-primary {
+  background: #D4A017 !important;
+  color: #1A2332 !important;
+}
+.basera-btn-primary:hover { background: #E0B028 !important; color: #1A2332 !important; }
+.basera-btn-ghost {
+  background: rgba(255,255,255,0.14) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.35);
+}
+.basera-btn-ghost:hover { background: rgba(255,255,255,0.22) !important; color: #fff !important; }
+
+.basera-stats {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 26px;
+}
+.basera-stat-card {
+  background: var(--basera-surface);
+  border: 1px solid var(--basera-border);
+  border-radius: var(--basera-radius);
+  padding: 18px 16px;
+  box-shadow: var(--basera-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.basera-stat-card::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--basera-primary), var(--basera-secondary));
+}
+.basera-stat-accent::before {
+  background: linear-gradient(180deg, var(--basera-accent), var(--basera-secondary));
+}
+.basera-stat-label {
+  color: var(--basera-muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+.basera-stat-value {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--basera-primary);
+  line-height: 1.1;
+}
+.basera-stat-meta {
+  color: var(--basera-secondary);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.basera-stat-card a {
+  margin-top: 6px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--basera-secondary) !important;
+  text-decoration: none;
+}
+.basera-stat-card a:hover { text-decoration: underline; }
+
+.basera-quick {
+  margin-bottom: 28px;
+}
+.basera-quick h2 {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--basera-primary);
+}
+.basera-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.basera-quick-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--basera-surface);
+  border: 1px solid var(--basera-border);
+  border-radius: var(--basera-radius);
+  padding: 16px;
+  text-decoration: none !important;
+  color: inherit !important;
+  box-shadow: var(--basera-shadow-sm);
+  transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease;
+}
+.basera-quick-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(20, 143, 119, 0.45);
+  box-shadow: var(--basera-shadow);
+}
+.basera-quick-icon {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1B4F72, #148F77);
+  color: #fff;
+  font-weight: 800;
+}
+.basera-quick-card strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--basera-primary);
+  font-size: 1.02rem;
+}
+.basera-quick-card p {
+  margin: 0;
+  color: var(--basera-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.basera-app-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+.basera-app-list .basera-app-module { margin-bottom: 0 !important; }
+.basera-app-module table { width: 100%; }
+.basera-app-module th,
+.basera-app-module td {
+  padding: 12px 14px !important;
+  border-bottom: 1px solid var(--basera-border);
+}
+.basera-app-module tr:last-child th,
+.basera-app-module tr:last-child td { border-bottom: none; }
+.basera-app-module .addlink,
+.basera-app-module .changelink,
+.basera-app-module .viewlink {
+  font-weight: 700;
+}
+
+/* ——— تسجيل الدخول ——— */
+body.basera-login {
+  background: var(--basera-bg) !important;
+}
+body.basera-login #header,
+body.basera-login #nav-sidebar,
+body.basera-login .toggle-nav-sidebar,
+body.basera-login #basera-footer {
+  display: none !important;
+}
+body.basera-login #container {
+  min-height: 100vh;
+}
+body.basera-login #main {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0 !important;
+}
+body.basera-login #content {
+  width: 100%;
+  max-width: none;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+body.basera-login .errornote {
+  max-width: 980px;
+  margin: 20px auto 0;
+}
+
+.basera-login-shell {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  min-height: 100vh;
+  width: 100%;
+}
+.basera-login-aside {
+  background:
+    linear-gradient(145deg, rgba(21, 67, 96, 0.96), rgba(17, 122, 101, 0.92)),
+    radial-gradient(circle at 20% 20%, rgba(212, 160, 23, 0.28), transparent 45%);
+  color: #fff;
+  padding: 48px;
+  display: flex;
+  align-items: center;
+}
+.basera-login-aside-inner { max-width: 420px; }
+.basera-login-badge {
+  display: inline-flex;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.25);
+  font-weight: 800;
+  margin-bottom: 18px;
+  color: #F7DC6F;
+}
+.basera-login-aside h1 {
+  margin: 0 0 14px !important;
+  color: #fff !important;
+  font-size: 2.4rem !important;
+  line-height: 1.25 !important;
+  font-weight: 800 !important;
+}
+.basera-login-aside p {
+  margin: 0 0 22px;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.75;
+  font-size: 1.05rem;
+}
+.basera-login-points {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+.basera-login-points li {
+  position: relative;
+  padding-inline-start: 22px;
+  font-weight: 600;
+}
+.basera-login-points li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--basera-accent);
+}
+
+.basera-login-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 28px;
+  background:
+    radial-gradient(ellipse at 80% 0%, rgba(20, 143, 119, 0.08), transparent 40%),
+    var(--basera-bg);
+}
+.basera-login-panel #login-form,
+body.login #login-form {
+  width: min(100%, 420px);
+  background: var(--basera-surface);
+  border: 1px solid var(--basera-border);
+  border-radius: 22px;
+  padding: 32px 28px;
+  box-shadow: var(--basera-shadow);
+}
+.basera-login-header {
+  margin-bottom: 22px;
+}
+.basera-login-header h2 {
+  margin: 0 0 6px;
+  color: var(--basera-primary);
+  font-size: 1.55rem;
+  font-weight: 800;
+}
+.basera-login-header p {
+  margin: 0;
+  color: var(--basera-muted);
+  font-size: 0.95rem;
+}
+body.login .form-row {
+  float: none !important;
+  padding: 0 0 16px !important;
+  border: none !important;
+}
+body.login .form-row label {
+  display: block;
+  margin-bottom: 6px;
+}
+body.login .form-row input {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+body.login .submit-row {
+  padding: 8px 0 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  text-align: stretch;
+}
+body.login .submit-row input {
+  width: 100%;
+  min-height: 48px;
+  background: linear-gradient(90deg, #1B4F72, #148F77) !important;
+  font-size: 1.05rem !important;
+}
+
+/* ——— تذييل ——— */
+#basera-footer {
+  margin-top: auto;
+  padding: 18px 28px 28px;
+}
+.basera-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  color: var(--basera-muted);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+.basera-footer-sep { opacity: 0.5; }
+
+/* ——— تفاصيل صغيرة ——— */
+.selector .selector-chosen h2 {
+  background: var(--basera-secondary) !important;
+}
+.calendarbox, .clockbox {
+  border-radius: 12px !important;
+  border-color: var(--basera-border) !important;
+  overflow: hidden;
+}
+.paginator a:link, .paginator a:visited {
+  background: var(--basera-surface);
+  border: 1px solid var(--basera-border);
+  border-radius: 8px;
+  padding: 4px 10px;
+}
+.paginator .this-page {
+  background: var(--basera-primary) !important;
+  color: #fff !important;
+  border-radius: 8px;
+  padding: 4px 10px;
+}
+
+/* ——— شارات الحالة في القوائم ——— */
+.basera-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+#result_list td .basera-badge {
+  box-shadow: 0 1px 0 rgba(27, 79, 114, 0.06);
+}
+
+#result_list select {
+  min-width: 120px;
+  font-weight: 700 !important;
+  color: var(--basera-primary) !important;
+  background: #EEF3F8 !important;
+  border: 1.5px solid var(--basera-secondary) !important;
+}
+
+/* حقول خيارات الأسئلة داخل الاختبار */
+fieldset.basera-mcq-fields,
+fieldset.basera-tf-fields {
+  border: 1.5px solid var(--basera-border) !important;
+  border-radius: 14px !important;
+  background: #F7FBF9 !important;
+  padding: 12px 16px 8px !important;
+  margin: 10px 0 16px !important;
+}
+fieldset.basera-tf-fields h2,
+fieldset.basera-mcq-fields h2 {
+  background: transparent !important;
+  color: var(--basera-primary) !important;
+  font-weight: 800 !important;
+}
+fieldset.basera-tf-fields ul,
+fieldset.basera-mcq-fields ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  padding: 4px 0 8px !important;
+  margin: 0 !important;
+}
+fieldset.basera-tf-fields li,
+fieldset.basera-mcq-fields li {
+  list-style: none;
+  background: #fff;
+  border: 1.5px solid var(--basera-border);
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+fieldset.basera-tf-fields input[type="radio"]:checked + label,
+fieldset.basera-mcq-fields input[type="radio"]:checked + label {
+  color: var(--basera-success);
+  font-weight: 800;
+}
+
+/* ——— تجاوب ——— */
+@media (max-width: 1100px) {
+  .basera-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .basera-login-shell { grid-template-columns: 1fr; }
+  .basera-login-aside { min-height: 280px; padding: 32px 24px; }
+  .basera-quick-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .basera-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #content { padding: 16px !important; }
+  .basera-hero { padding: 22px; }
+  .basera-brand-text small { display: none; }
+}
+@media (max-width: 480px) {
+  .basera-stats { grid-template-columns: 1fr; }
+}

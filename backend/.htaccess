@@ -1,0 +1,6 @@
+# حماية ملفات حساسة — إعداد Passenger يتم من cPanel → Setup Python App
+<IfModule mod_authz_core.c>
+  <FilesMatch "(^\.env|^\.git|passenger_wsgi\.py|manage\.py|db\.sqlite3)$">
+    Require all denied
+  </FilesMatch>
+</IfModule>

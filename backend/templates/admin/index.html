@@ -1,0 +1,126 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static basera_admin_tags %}
+
+{% block bodyclass %}{{ block.super }} basera-dashboard{% endblock %}
+
+{% block content %}
+{% basera_dashboard_stats as stats %}
+
+<section class="basera-hero" aria-label="ترحيب">
+  <div class="basera-hero-copy">
+    <p class="basera-eyebrow">لوحة التحكم</p>
+    <h1>{% firstof user.get_full_name user.get_username %}، أهلاً بك في بصيرة</h1>
+    <p class="basera-hero-lead">
+      أدِر الصفوف والمواد والدروس والاختبارات من مكان واحد — بتصميم هادئ عالي التباين.
+    </p>
+  </div>
+  <div class="basera-hero-actions">
+    <a class="basera-btn basera-btn-primary" href="/admin/lessons/lesson/add/">إضافة درس</a>
+    <a class="basera-btn basera-btn-ghost" href="/admin/tests/quiz/add/">إضافة اختبار</a>
+  </div>
+</section>
+
+<section class="basera-stats" aria-label="إحصائيات سريعة">
+  <article class="basera-stat-card">
+    <span class="basera-stat-label">الصفوف</span>
+    <strong class="basera-stat-value">{{ stats.grades }}</strong>
+    <a href="/admin/lessons/grade/">إدارة الصفوف</a>
+  </article>
+  <article class="basera-stat-card">
+    <span class="basera-stat-label">المواد</span>
+    <strong class="basera-stat-value">{{ stats.categories }}</strong>
+    <a href="/admin/lessons/category/">إدارة المواد</a>
+  </article>
+  <article class="basera-stat-card basera-stat-accent">
+    <span class="basera-stat-label">الدروس</span>
+    <strong class="basera-stat-value">{{ stats.lessons }}</strong>
+    <span class="basera-stat-meta">{{ stats.published }} منشور</span>
+    <a href="/admin/lessons/lesson/">إدارة الدروس</a>
+  </article>
+  <article class="basera-stat-card">
+    <span class="basera-stat-label">الاختبارات</span>
+    <strong class="basera-stat-value">{{ stats.quizzes }}</strong>
+    <a href="/admin/tests/quiz/">إدارة الاختبارات</a>
+  </article>
+  <article class="basera-stat-card">
+    <span class="basera-stat-label">المستخدمون</span>
+    <strong class="basera-stat-value">{{ stats.users }}</strong>
+    <a href="/admin/core/user/">إدارة المستخدمين</a>
+  </article>
+</section>
+
+<section class="basera-quick" aria-label="اختصارات">
+  <h2>مسارات سريعة</h2>
+  <div class="basera-quick-grid">
+    <a class="basera-quick-card" href="/admin/lessons/grade/">
+      <span class="basera-quick-icon" aria-hidden="true">١</span>
+      <div>
+        <strong>الصفوف الدراسية</strong>
+        <p>أضف صفّاً ثم اربط المواد به حتى تظهر في التطبيق</p>
+      </div>
+    </a>
+    <a class="basera-quick-card" href="/admin/lessons/category/">
+      <span class="basera-quick-icon" aria-hidden="true">٢</span>
+      <div>
+        <strong>المواد</strong>
+        <p>فعّل المادة واربطها بصف — وإلا لن تظهر الدروس</p>
+      </div>
+    </a>
+    <a class="basera-quick-card" href="/admin/lessons/lesson/">
+      <span class="basera-quick-icon" aria-hidden="true">٣</span>
+      <div>
+        <strong>الدروس</strong>
+        <p>الصق نصاً للقراءة، أو ارفع ملفاً صوتياً جاهزاً، ثم انشر</p>
+      </div>
+    </a>
+    <a class="basera-quick-card" href="/admin/tests/quiz/">
+      <span class="basera-quick-icon" aria-hidden="true">٤</span>
+      <div>
+        <strong>الاختبارات</strong>
+        <p>اربط الاختبار بدرس منشور ثم أضف الأسئلة — هذه تظهر في التطبيق</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div id="content-main" class="basera-app-list">
+  {% if app_list %}
+    {% for app in app_list %}
+      <div class="basera-app-module app-{{ app.app_label }} module">
+        <table>
+          <caption>
+            <a href="{{ app.app_url }}" class="section" title="{% blocktranslate with name=app.name %}Models in the {{ name }} application{% endblocktranslate %}">{{ app.name }}</a>
+          </caption>
+          {% for model in app.models %}
+            <tr class="model-{{ model.object_name|lower }}">
+              {% if model.admin_url %}
+                <th scope="row"><a href="{{ model.admin_url }}">{{ model.name }}</a></th>
+              {% else %}
+                <th scope="row">{{ model.name }}</th>
+              {% endif %}
+
+              {% if model.add_url %}
+                <td><a href="{{ model.add_url }}" class="addlink">{% translate 'Add' %}</a></td>
+              {% else %}
+                <td></td>
+              {% endif %}
+
+              {% if model.admin_url and show_changelinks %}
+                {% if model.view_only %}
+                  <td><a href="{{ model.admin_url }}" class="viewlink">{% translate 'View' %}</a></td>
+                {% else %}
+                  <td><a href="{{ model.admin_url }}" class="changelink">{% translate 'Change' %}</a></td>
+                {% endif %}
+              {% elif show_changelinks %}
+                <td></td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>{% translate "You don't have permission to view or edit anything." %}</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "admin/change_form.html" %}
+
+{% block content %}
+  <div class="basera-form-hint" style="background:linear-gradient(90deg,rgba(27,79,114,.08),rgba(20,143,119,.08));border:1px solid #E2E8F0;border-radius:14px;padding:14px 16px;margin:0 0 18px;color:#5A6A7A;font-weight:600;line-height:1.7">
+    <strong style="color:#1B4F72">ثلاث طرق لإضافة محتوى الدرس (اختر واحدة):</strong><br>
+    ① <b>لصق النص</b> → يُحفظ ويُحوَّل لصوت تلقائياً<br>
+    ② <b>رفع ملف صوتي</b> → يُشغَّل كما هو في التطبيق<br>
+    ③ <b>رفع PDF</b> → استخراج النص ثم تحويله لملف صوتي<br>
+    ثم عيّن الحالة إلى <b>منشور</b>.
+  </div>
+  {{ block.super }}
+{% endblock %}
